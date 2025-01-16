@@ -1,0 +1,52 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: spark-workflow-template
+  namespace: spark-apps
+spec:
+  serviceAccountName: spark
+  entrypoint: spark-job
+  # Set default resources for all templates
+  podSpecPatch: |
+    containers:
+      - name: main
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1"
+    initContainers:
+      - name: init
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+  arguments:
+    parameters:
+    - name: sparkImage
+      value: "mayankyadav25/spark_test:latest"
+      description: "Spark application Docker image"
+  templates:
+  - name: spark-job
+    inputs:
+      parameters:
+      - name: sparkImage
+    container:
+      image: "{{inputs.parameters.sparkImage}}"
+      resources:
+        requests:
+          memory: "1Gi"
+          cpu: "500m"
+        limits:
+          memory: "2Gi"
+          cpu: "1"
+    # Set retry strategy in case of failures
+    retryStrategy:
+      limit: 2
+    # Add timeout
+    activeDeadlineSeconds: 3600  # 1 hour timeout

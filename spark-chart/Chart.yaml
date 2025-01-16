@@ -1,0 +1,5 @@
+# spark-chart/Chart.yaml
+apiVersion: v2
+name: spark-app
+description: A Helm chart for Spark application on Kubernetes
+version: 0.1.0

@@ -1,0 +1,20 @@
+# spark-chart/values.yaml
+namespace: spark-apps
+sparkImage:
+  repository: mayankyadav25/spark_test:latest
+  tag: latest
+  pullPolicy: Always
+resources:
+  limits:
+    memory: "16Gi"
+    cpu: "8"
+  requests:
+    memory: "8Gi"
+    cpu: "4"
+maxExecutors: 5
+executorMemory: "1Gi"
+executorCores: 1
+driverMemory: "1Gi"
+serviceAccount:
+  create: true
+  name: spark
