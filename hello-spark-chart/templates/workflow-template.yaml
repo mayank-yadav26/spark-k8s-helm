@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: {{ .Values.workflow.name }}-template
+  labels:
+    {{- include "spark-workflow.labels" . | nindent 4 }}
+spec:
+  templates:
+  - name: hello-spark-temp
+    container:
+      image: "{{ .Values.workflow.image.repository }}:{{ .Values.workflow.image.tag }}"
+      imagePullPolicy: {{ .Values.workflow.image.pullPolicy }}
+      resources:
+        {{- toYaml .Values.workflow.resources | nindent 8 }}

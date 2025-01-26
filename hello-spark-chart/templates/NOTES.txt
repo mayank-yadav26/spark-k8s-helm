@@ -1,0 +1,13 @@
+Thank you for installing {{ .Chart.Name }}.
+
+Your Spark application workflow has been deployed with the following configuration:
+  - Workflow Name: {{ .Values.workflow.name }}
+  - Image: {{ .Values.workflow.image.repository }}:{{ .Values.workflow.image.tag }}
+  - Pull Policy: {{ .Values.workflow.image.pullPolicy }}
+
+To check the status of your workflow:
+  kubectl get workflows -n {{ .Release.Namespace }}
+
+To view the logs:
+  kubectl logs -n {{ .Release.Namespace }} -l app.kubernetes.io/instance={{ .Release.Name }}
+

@@ -6,30 +6,30 @@ metadata:
 spec:
   serviceAccountName: spark
   entrypoint: spark-job
-  # Set default resources for all templates
-  podSpecPatch: |
-    containers:
-      - name: main
-        resources:
-          requests:
-            memory: "1Gi"
-            cpu: "500m"
-          limits:
-            memory: "2Gi"
-            cpu: "1"
-    initContainers:
-      - name: init
-        resources:
-          requests:
-            memory: "256Mi"
-            cpu: "100m"
-          limits:
-            memory: "512Mi"
-            cpu: "200m"
+  # # Set default resources for all templates
+  # podSpecPatch: |
+  #   containers:
+  #     - name: main
+  #       resources:
+  #         requests:
+  #           memory: "1Gi"
+  #           cpu: "500m"
+  #         limits:
+  #           memory: "2Gi"
+  #           cpu: "1"
+  #   initContainers:
+  #     - name: init
+  #       resources:
+  #         requests:
+  #           memory: "256Mi"
+  #           cpu: "100m"
+  #         limits:
+  #           memory: "512Mi"
+  #           cpu: "200m"
   arguments:
     parameters:
     - name: sparkImage
-      value: "mayankyadav25/spark_test:latest"
+      value: "mayankyadav25/spark_agent:v10.0"
       description: "Spark application Docker image"
   templates:
   - name: spark-job
@@ -38,15 +38,15 @@ spec:
       - name: sparkImage
     container:
       image: "{{inputs.parameters.sparkImage}}"
-      resources:
-        requests:
-          memory: "1Gi"
-          cpu: "500m"
-        limits:
-          memory: "2Gi"
-          cpu: "1"
-    # Set retry strategy in case of failures
-    retryStrategy:
-      limit: 2
-    # Add timeout
-    activeDeadlineSeconds: 3600  # 1 hour timeout
+    #   resources:
+    #     requests:
+    #       memory: "1Gi"
+    #       cpu: "500m"
+    #     limits:
+    #       memory: "2Gi"
+    #       cpu: "1"
+    # # Set retry strategy in case of failures
+    # retryStrategy:
+    #   limit: 2
+    # # Add timeout
+    # activeDeadlineSeconds: 3600  # 1 hour timeout

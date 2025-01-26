@@ -4,9 +4,32 @@ metadata:
   name: spark-role
   namespace: {{ .Values.namespace }}
 rules:
-- apiGroups: [""]
-  resources: ["pods"]
-  verbs: ["get", "list", "watch", "create", "delete"]
-- apiGroups: [""]
-  resources: ["services"]
-  verbs: ["get", "list", "watch", "create", "delete"]
+  # Permissions for pods
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch", "create", "delete", "patch", "update","deletecollection"]
+  # Permissions for services
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["get", "list", "watch", "create", "delete", "patch", "update","deletecollection"]
+  # Permissions for ConfigMaps
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["get", "list", "watch", "create", "delete", "patch", "update","deletecollection"]
+  # Permissions for Events
+  - apiGroups: [""]
+    resources: ["events"]
+    verbs: ["get", "list", "watch", "create", "patch"]
+  # Argo resources
+  - apiGroups: ["argoproj.io"]
+    resources: ["workflowtaskresults", "workflows"]
+    verbs: ["create", "get", "list", "watch", "update", "patch", "delete"]
+  # For batch jobs (if Spark creates Jobs)
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["create", "delete"]
+
+  # Add this new rule for persistentvolumeclaims:
+  - apiGroups: [""]
+    resources: ["persistentvolumeclaims"]
+    verbs: ["create", "get", "list", "watch", "delete", "deletecollection"]

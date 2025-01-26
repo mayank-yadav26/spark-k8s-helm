@@ -1,0 +1,13 @@
+workflow:
+  name: hello-spark-app
+  image:
+    repository: mayankyadav25/spark_test
+    tag: v1.0
+    pullPolicy: Always
+  resources:
+    requests:
+      memory: "1Gi"
+      cpu: "500m"
+    limits:
+      memory: "2Gi"
+      cpu: "1000m"
